@@ -1,10 +1,12 @@
 import wollok.game.*
-import pepita.*
+import configuracion.*
 import texto.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(pepita)
-	game.addVisual(texto)
+	game.title("Las aventuras de Alf y el Rastafari 🥵")
+	game.cellSize(64)	
+	game.height(11)
+	game.width(15)
+	config.configuracionInicial()
 	game.start()
 }
