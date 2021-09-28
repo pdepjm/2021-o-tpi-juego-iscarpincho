@@ -1,10 +1,17 @@
 import wollok.game.*
-import pepita.*
 import texto.*
+import personaje.*
 
 program juego {
 	game.title("Juego Base")
-	game.addVisual(pepita)
+	game.addVisual(personaje)
 	game.addVisual(texto)
+	
+//	Podriamos extraer esto en un metodo
+	keyboard.left().onPressDo({ personaje.moverPara(izquierda) })
+	keyboard.up().onPressDo({ personaje.moverPara(arriba) })
+	keyboard.right().onPressDo({ personaje.moverPara(derecha) })
+	keyboard.down().onPressDo({ personaje.moverPara(abajo) })
+	
 	game.start()
 }
