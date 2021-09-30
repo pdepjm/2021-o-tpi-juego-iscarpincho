@@ -1,17 +1,9 @@
 import wollok.game.*
-import texto.*
-import personaje.*
+import configuracion.*
 
 program juego {
-	game.title("Juego Base")
-	game.addVisual(personaje)
-	game.addVisual(texto)
 	
-//	Podriamos extraer esto en un metodo
-	keyboard.left().onPressDo({ personaje.moverPara(izquierda) })
-	keyboard.up().onPressDo({ personaje.moverPara(arriba) })
-	keyboard.right().onPressDo({ personaje.moverPara(derecha) })
-	keyboard.down().onPressDo({ personaje.moverPara(abajo) })
-	
+	config.configuracionInicial()
+
 	game.start()
 }
