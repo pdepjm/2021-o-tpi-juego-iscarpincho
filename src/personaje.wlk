@@ -1,8 +1,9 @@
 import wollok.game.*
 import direcciones.*
+import configuracion.*
+
 
 object personaje {
-	//	TODO: No dejar que se vaya de pantalla
 	var posicion = game.center()
 
 	method image() {
@@ -14,6 +15,13 @@ object personaje {
 	} 
 	
 	method moverPara(direccion) {
-		posicion = direccion.proximaPosicion(posicion) 
+		if (self.puedeMoversePara(direccion)){
+			posicion = direccion.proximaPosicion(posicion)			
+		}
 	}
+	
+	method puedeMoversePara(direccion) = not self.tieneEnfrenteUnaPared(direccion.proximaPosicion(posicion))
+	
+	method tieneEnfrenteUnaPared(coordenadas) = config.nivelActual().hayUnaPared(coordenadas)
+	//method tieneEnfrenteUnaPared(coordenadas) = game.getObjectsIn(coordenadas).any{unObjeto => not unObjeto.puedePisarse()}
 }

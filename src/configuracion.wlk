@@ -5,13 +5,14 @@ import texto.*
 import direcciones.*
 
 object config{
+    var property nivelActual = nivel1
     
     method configuracionInicial(){
         self.setGameTitle()
         self.setGameSize()
-        self.configObjects()
         self.configTeclas()
         nivel1.generarNivel()
+        self.configObjects()
     }
 
     method setGameTitle(){
@@ -21,7 +22,7 @@ object config{
     method setGameSize(){
         game.cellSize(64)	
 	    game.height(11)
-	    game.width(15)
+	    game.width(18)
     }
 
     method configObjects(){
