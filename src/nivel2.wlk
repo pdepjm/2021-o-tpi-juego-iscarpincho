@@ -1,9 +1,8 @@
 import wollok.game.*
 import tablero.*
 import nivel.*
-import nivel2.*
 
-const nivel1 = new Nivel(
+const nivel2 = new Nivel(
     paredes = [
         new ConjuntoDeParedes( // Pared inferior
             inicio = game.at(0,0),
@@ -37,7 +36,10 @@ const nivel1 = new Nivel(
         ),
         new Pared(posicion = game.at(15, 4))
     ],
-    casilleroInicial = new CasilleroInicial(posicion = game.at(1, 1)),
-    casilleroFinal = new CasilleroFinal(posicion = game.at(16,9)),
+    aguas = [
+        new Agua(posicion = game.at(15, 3))
+    ],
+    casilleroInicial = new CasilleroInicial(posicion = game.at(1, 9)),
+    casilleroFinal = new CasilleroFinal(posicion = game.at(16,1)),
     proximoNivel = nivel2
 )

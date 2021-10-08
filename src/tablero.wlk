@@ -6,13 +6,12 @@ class Casillero {
     method render() {
         game.addVisual(self)
     }
+
+    //predeterminados para la mayoria:
+    method puedePisarse() = true
+    method esLetal() = false
     
     method position() = posicion
-
-    // method pasarDeNivel() {
-    //     game.removeVisual(self)
-    //     game.addVisual(self)
-    // }
 }
 
 class ConjuntoDeParedes {
@@ -34,7 +33,7 @@ class ConjuntoDeParedes {
 }
 
 class Pared inherits Casillero {
-    const property puedePisarse = false
+    override method puedePisarse() = false
 
     method image() {
         return "./assets/pared.png"
@@ -43,9 +42,27 @@ class Pared inherits Casillero {
 }
 
 class Camino inherits Casillero {
-    const property puedePisarse = true
-
     method image() {
         return "./assets/camino.png"
+    }
+}
+
+class CasilleroInicial inherits Camino {
+    override method image() {
+        return "./assets/bloqueinicial.png"
+    }
+}
+
+class CasilleroFinal inherits Camino {
+    override method image() {
+        return "./assets/bloquefinal.png"
+    }
+}
+
+class Agua inherits Casillero {
+    override method esLetal() = true
+    
+    method image() {
+        return "./assets/agua.png"
     }
 }
