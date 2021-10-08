@@ -11,12 +11,12 @@ object config{
     method configuracionInicial(){
         self.setGameTitle()
         self.setGameSize()
-        self.configTeclas()
         self.configurarNivelActual()
     }
     
     method configurarNivelActual(){
         nivelActual.generarNivel()
+        self.configTeclas()
         self.configObjects()
         self.configurarColiciones()
     }
@@ -60,6 +60,10 @@ object config{
     }
 
     method eliminarTablero(){
+        game.clear()
+    }
+/*
+    method eliminarTablero(){
         const ancho = (0 .. (game.width()-1))
         const alto = (0 .. (game.height()-1))
         ancho.forEach{
@@ -68,4 +72,5 @@ object config{
             }
         }
     }
+*/
 }

@@ -14,10 +14,8 @@ object personaje {
 	}
 	
 	method moverPara(direccion) {
-		if (self.puedeMoversePara(direccion)){
+		if (self.puedeMoversePara(direccion) && posicion != config.nivelActual().posicionFinal()){
 			posicion = direccion.proximaPosicion(posicion)
-			// if(self.estaEnElAgua())
-			// 	self.morirse()
 		}
 	}
 	
@@ -36,6 +34,6 @@ object personaje {
 
 	method morirse(){
 		game.say(self,"ME MORI!! F :(")
-		game.schedule(3000, { => posicion = config.nivelActual().posicionInicial()})
+		game.schedule(100, { => posicion = config.nivelActual().posicionInicial()})
 	}
 }

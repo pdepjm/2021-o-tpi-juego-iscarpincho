@@ -2,21 +2,19 @@ import wollok.game.*
 import tablero.*
     
 class Nivel{
-	const paredes = []
-	const aguas = []
+	const casilleros = []
     const property casilleroInicial = null
     const property casilleroFinal = null
     const property proximoNivel = null
     
     method generarNivel() {
-        self.generarParedes()
-        self.generarAgua()
+        self.generarCasilleros()
         self.generarInicialYFinal()
         self.generarCaminos()
     }   
 
-    method generarParedes(){
-        paredes.forEach {pared => pared.render()}
+    method generarCasilleros(){
+        casilleros.forEach {casillero => casillero.render()}
     }
 
     method generarCaminos(){
@@ -34,10 +32,6 @@ class Nivel{
     }
 
     method casilleroVacio(pos) = game.getObjectsIn(pos).isEmpty()
-
-    method generarAgua(){
-        aguas.forEach {agua => agua.render()}
-    }
 
     method generarInicialYFinal(){
         casilleroInicial.render()
