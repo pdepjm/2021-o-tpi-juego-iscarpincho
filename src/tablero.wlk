@@ -49,24 +49,6 @@ class Agua inherits Casillero {
     }
 }
 
-/*class ConjuntoDeParedes {
-    const inicio = game.at(0,0) 
-    const fin = game.at(0,0)
-    const orientacion = "x"
-
-    method render() {
-        var bloques = []
-        if(orientacion == "x") {
-            const anchoPared = ((inicio.x()) .. (fin.x()))
-            bloques = anchoPared.map{x => return new Pared(posicion = game.at(x,inicio.y()))}
-        } else if(orientacion == "y") {
-            const altoPared = ((inicio.y()) .. (fin.y()))
-            bloques = altoPared.map{y => return new Pared(posicion = game.at(inicio.x(),y))}
-        }
-        bloques.forEach{unBloque => unBloque.render()}
-    }
-}*/
-
 class ConjuntoDeCasilleros{
     const inicio = game.at(0,0)
     const fin = game.at(0,0)
@@ -75,30 +57,38 @@ class ConjuntoDeCasilleros{
 
 class ConjuntoDeParedes inherits ConjuntoDeCasilleros{
     method render(){
-        constructorParedes.constructorDeBloques(inicio, fin, orientacion)
+        constructorDeBloques.construir(inicio, fin, orientacion, creadorDePared)
     }
 }
 
 class ConjuntoDeAguas inherits ConjuntoDeCasilleros{
     method render(){
-        constructorAguas.constructorDeBloques(inicio, fin, orientacion)
+        constructorDeBloques.construir(inicio, fin, orientacion, creadorDeAgua)
     }
 }
 
-object constructorParedes{
-    method constructorDeBloques(inicio, fin, orientacion){
-        if (orientacion == "y")
-		    (inicio.y() .. fin.y()).forEach{n => game.addVisualIn(new Pared(), game.at(inicio.x(),n))}
-        else
-            (inicio.x() .. fin.x()).forEach{n => game.addVisualIn(new Pared(), game.at(n,inicio.y()))}
+object constructorDeBloques{
+    method construir(inicio, fin, orientacion, creador){
+        orientacion.rango(inicio, fin).forEach{n => game.addVisualIn(creador.crear(), orientacion.coordenada(inicio, n))}
     }
 }
 
-object constructorAguas{
-    method constructorDeBloques(inicio, fin, orientacion){
-        if (orientacion == "y")
-		    (inicio.y() .. fin.y()).forEach{n => game.addVisualIn(new Agua(), game.at(inicio.x(),n))}
-        else
-            (inicio.x() .. fin.x()).forEach{n => game.addVisualIn(new Agua(), game.at(n,inicio.y()))}
-    }
+object creadorDePared {
+  method crear() = new Pared()
+}
+
+object creadorDeAgua {
+  method crear() = new Agua()
+}
+
+object orientacionVertical{
+    method rango(inicio, fin) = (inicio.y() .. fin.y())
+    
+    method coordenada(inicio, n) = game.at(inicio.x(), n)
+}
+
+object orientacionHorizontal{
+    method rango(inicio, fin) = (inicio.x() .. fin.x())
+
+    method coordenada(inicio, n) = game.at(n, inicio.y())
 }
