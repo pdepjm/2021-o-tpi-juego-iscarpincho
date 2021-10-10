@@ -2,13 +2,13 @@ import wollok.game.*
 import direcciones.*
 import configuracion.*
 
-object personaje {
+class Personaje{
 	var property posicion = config.nivelActual().posicionInicial()
 
 	method image() {
 		return "personaje.png"
 	}
-	
+
 	method position() {
 		return posicion
 	}
@@ -22,8 +22,12 @@ object personaje {
 	method puedeMoversePara(direccion) = not self.tieneEnfrenteUnaPared(direccion.proximaPosicion(posicion))
 	
 	method tieneEnfrenteUnaPared(coordenadas) = config.nivelActual().hayUnaPared(coordenadas)
-	//method tieneEnfrenteUnaPared(coordenadas) = game.getObjectsIn(coordenadas).any{unObjeto => not unObjeto.puedePisarse()}
 
+	
+}
+
+object personaje inherits Personaje{
+			
 	method estaEnElAgua() = game.getObjectsIn(posicion).any{unObjeto => unObjeto.esLetal() == true}
 
 	method llegarALaMeta(){
@@ -36,4 +40,26 @@ object personaje {
 		game.say(self,"ME MORI!! F :(")
 		game.schedule(100, { => posicion = config.nivelActual().posicionInicial()})
 	}
+}
+
+
+class Enemigo inherits Personaje{
+	const tipoDeMovimiento = "horizontal"
+			
+	override method image(){
+		return "enemigo.png"
+	} 
+	
+	/*override method puedeMoversePara(direccion){
+		super(puedeMoversePara(direccion)) and
+		direccionHabilitada(direccion) 
+	}*/
+	
+	method direccionHabilitada(direccion){
+		if(tipoDeMovimiento == "horizontal"){
+			super(pued)
+		}
+	}
+	
+		
 }
