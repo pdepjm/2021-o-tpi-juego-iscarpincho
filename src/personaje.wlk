@@ -26,7 +26,7 @@ class Personaje{
 	
 }
 
-object personaje inherits Personaje{
+class Protagonista inherits Personaje{
 			
 	method estaEnElAgua() = game.getObjectsIn(posicion).any{unObjeto => unObjeto.esLetal() == true}
 
@@ -50,16 +50,28 @@ class Enemigo inherits Personaje{
 		return "enemigo.png"
 	} 
 	
-	/*override method puedeMoversePara(direccion){
-		super(puedeMoversePara(direccion)) and
-		direccionHabilitada(direccion) 
-	}*/
-	
-	method direccionHabilitada(direccion){
+	override method puedeMoversePara(direccion){
 		if(tipoDeMovimiento == "horizontal"){
-			super(pued)
+			return (direccion == derecha or direccion == izquierda) and 
+				super(direccion)
+		}else{
+			return (direccion == arriba or direccion == abajo) and
+			super(direccion)
 		}
 	}
 	
-		
-}
+	/**
+		Metodo recursivo 
+	*/
+	override method moverPara(dirInit){
+		const movimiento =  self.puedeMoversePara(dirInit)
+			if(movimiento){
+				super(dirInit)
+				self.moverPara(dirInit)
+			}else{
+				super(dirInit.direccionOpuesta())
+				self.moverPara(dirInit)
+			}
+	}
+	
+}	

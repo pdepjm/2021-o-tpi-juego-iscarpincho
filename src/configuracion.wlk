@@ -7,6 +7,8 @@ import direcciones.*
 
 object config{
     var property nivelActual = nivel1
+    const personaje = new Protagonista()
+    const enemigo = new Enemigo(tipoDeMovimiento="horizontal")
     
     method configuracionInicial(){
         self.setGameTitle()
@@ -33,8 +35,12 @@ object config{
 
     method configObjects(){
         game.addVisual(texto)
+        
         personaje.posicion(nivelActual.posicionInicial())
         game.addVisual(personaje)
+       
+        game.addVisual(enemigo)
+        enemigo.moverPara(derecha)
     }
 
     method configTeclas(){
@@ -45,7 +51,7 @@ object config{
     }    
 
     method configurarColiciones() {
-		game.onCollideDo(self.nivelActual().casilleroFinal(), {personaje => personaje.llegarALaMeta()})
+		game.onCollideDo(self.nivelActual().casilleroFinal(), {per => per.llegarALaMeta()})
 		game.onCollideDo(personaje, {unObjeto => 
             if (unObjeto.esLetal())
                 personaje.morirse()
