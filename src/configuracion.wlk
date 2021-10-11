@@ -7,8 +7,7 @@ import direcciones.*
 
 object config{
     var property nivelActual = nivel1
-    const personaje = new Protagonista()
-    const enemigo = new Enemigo(tipoDeMovimiento="horizontal")
+    const personaje = new Protagonista(posicion = nivelActual.posicionInicial())
     
     method configuracionInicial(){
         self.setGameTitle()
@@ -34,13 +33,9 @@ object config{
     }
 
     method configObjects(){
-        game.addVisual(texto)
-        
+        game.addVisual(texto)        
         personaje.posicion(nivelActual.posicionInicial())
         game.addVisual(personaje)
-       
-        game.addVisual(enemigo)
-        enemigo.moverPara(derecha)
     }
 
     method configTeclas(){

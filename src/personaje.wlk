@@ -3,7 +3,7 @@ import direcciones.*
 import configuracion.*
 
 class Personaje{
-	var property posicion = config.nivelActual().posicionInicial()
+	var property posicion = game.at(0,0)
 
 	method image() {
 		return "personaje.png"
@@ -23,17 +23,17 @@ class Personaje{
 	
 	method tieneEnfrenteUnaPared(coordenadas) = config.nivelActual().hayUnaPared(coordenadas)
 
+	method puedePisarse() = true
+
+	method esLetal() = false
 	
 }
 
 class Protagonista inherits Personaje{
-			
-	method estaEnElAgua() = game.getObjectsIn(posicion).any{unObjeto => unObjeto.esLetal() == true}
 
 	method llegarALaMeta(){
 		game.say(self,"GANE!!")	
-		//self.inmovilizar()
-		game.schedule(1000, { => config.pasarDeNivel()})	
+		game.schedule(1000, { => config.pasarDeNivel()})
 	}
 
 	method morirse(){
@@ -44,34 +44,23 @@ class Protagonista inherits Personaje{
 
 
 class Enemigo inherits Personaje{
-	const tipoDeMovimiento = "horizontal"
+	var direccion = izquierda
 			
 	override method image(){
 		return "enemigo.png"
 	} 
 	
-	override method puedeMoversePara(direccion){
-		if(tipoDeMovimiento == "horizontal"){
-			return (direccion == derecha or direccion == izquierda) and 
-				super(direccion)
-		}else{
-			return (direccion == arriba or direccion == abajo) and
-			super(direccion)
-		}
+	method desplazarse(){  
+		if(not self.puedeMoversePara(direccion))
+			direccion = direccion.direccionOpuesta()
+		self.moverPara(direccion)
 	}
+
+	override method esLetal() = true
 	
-	/**
-		Metodo recursivo 
-	*/
-	override method moverPara(dirInit){
-		const movimiento =  self.puedeMoversePara(dirInit)
-			if(movimiento){
-				super(dirInit)
-				self.moverPara(dirInit)
-			}else{
-				super(dirInit.direccionOpuesta())
-				self.moverPara(dirInit)
-			}
-	}
+	override method puedeMoversePara(sentido) = super(sentido) and not self.tieneEnfrenteAlgoLetal(sentido.proximaPosicion(posicion))
+	
+	method tieneEnfrenteAlgoLetal(coordenadas) = config.nivelActual().hayAlgoLetal(coordenadas)
+
 	
 }	

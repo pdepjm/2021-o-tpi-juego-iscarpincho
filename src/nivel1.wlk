@@ -2,6 +2,8 @@ import wollok.game.*
 import tablero.*
 import nivel.*
 import nivel2.*
+import direcciones.*
+import personaje.*
 
 const nivel1 = new Nivel(
     casilleros = [
@@ -108,6 +110,9 @@ const nivel1 = new Nivel(
         new Pared(posicion = game.at(3, 6)),
         new Pared(posicion = game.at(5, 1)),
         new Pared(posicion = game.at(4, 7))
+    ],
+    enemigos = [
+        new Enemigo(direccion = derecha, posicion = game.at(6,1))
     ],
     casilleroInicial = new CasilleroInicial(posicion = game.at(1, 1)),
     casilleroFinal = new CasilleroFinal(posicion = game.at(16,9)),
