@@ -6,7 +6,7 @@ object personaje {
 	var posicion = game.center()
 
 	method image() {
-		return "personaje.png"
+		return "carpincho.png"
 	}
 	
 	method position() {
