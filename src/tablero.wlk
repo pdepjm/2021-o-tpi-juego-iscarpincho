@@ -21,6 +21,8 @@ class Pared inherits Casillero {
         return "./assets/pared.png"
     }
 
+    method esDeLaMismaClase(objeto) = not objeto.puedePisarse()
+
 }
 
 class Camino inherits Casillero {
@@ -47,6 +49,8 @@ class Agua inherits Casillero {
     method image() {
         return "./assets/agua.png"
     }
+
+    method esDeLaMismaClase(objeto) = objeto.esLetal()
 }
 
 class ConjuntoDeCasilleros{

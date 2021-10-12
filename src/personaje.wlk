@@ -1,35 +1,46 @@
 import wollok.game.*
 import direcciones.*
 import configuracion.*
+import tablero.*
 
-object personaje {
-	var property posicion = config.nivelActual().posicionInicial()
+class Personaje{
+	var property posicion = game.at(0,0)
+	var property direccionActual = derecha
 
-	method image() {
-		return "personaje.png"
-	}
-	
-	method position() {
-		return posicion
-	}
+	method position() = posicion
 	
 	method moverPara(direccion) {
 		if (self.puedeMoversePara(direccion) && posicion != config.nivelActual().posicionFinal()){
+			self.cambiarDireccion(direccion)
 			posicion = direccion.proximaPosicion(posicion)
 		}
 	}
-	
-	method puedeMoversePara(direccion) = not self.tieneEnfrenteUnaPared(direccion.proximaPosicion(posicion))
-	
-	method tieneEnfrenteUnaPared(coordenadas) = config.nivelActual().hayUnaPared(coordenadas)
-	//method tieneEnfrenteUnaPared(coordenadas) = game.getObjectsIn(coordenadas).any{unObjeto => not unObjeto.puedePisarse()}
 
-	method estaEnElAgua() = game.getObjectsIn(posicion).any{unObjeto => unObjeto.esLetal() == true}
+	method cambiarDireccion(direccion){
+		direccionActual = direccion
+	}
+
+	method image() = self.nombre() + "_" + direccionActual.nombre() + ".png"
+	
+	method puedeMoversePara(direccion) = not self.tieneEnfrenteAlgo(new Pared(), direccion.proximaPosicion(posicion))
+
+	method tieneEnfrenteAlgo(algo, coordenadas) = config.nivelActual().hayAlgo(algo, coordenadas)
+
+	method puedePisarse() = true
+
+	method esLetal() = false
+
+	method nombre() = "personaje"
+	
+}
+
+class Protagonista inherits Personaje{
+
+	override method nombre() = "personaje"
 
 	method llegarALaMeta(){
 		game.say(self,"GANE!!")	
-		//self.inmovilizar()
-		game.schedule(1000, { => config.pasarDeNivel()})	
+		game.schedule(1000, { => config.pasarDeNivel()})
 	}
 
 	method morirse(){
@@ -37,3 +48,18 @@ object personaje {
 		game.schedule(100, { => posicion = config.nivelActual().posicionInicial()})
 	}
 }
+
+
+class Enemigo inherits Personaje{
+	override method nombre() = "enemigo"
+	
+	method desplazarse(){  
+		if(not self.puedeMoversePara(direccionActual))
+			direccionActual = direccionActual.direccionOpuesta()
+		self.moverPara(direccionActual)
+	}
+
+	override method esLetal() = true
+	
+	override method puedeMoversePara(direccion) = super(direccion) and not self.tieneEnfrenteAlgo(new Agua(), direccion.proximaPosicion(posicion))
+}	

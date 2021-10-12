@@ -7,6 +7,7 @@ import direcciones.*
 
 object config{
     var property nivelActual = nivel1
+    const personaje = new Protagonista(posicion = nivelActual.posicionInicial())
     
     method configuracionInicial(){
         self.setGameTitle()
@@ -32,7 +33,7 @@ object config{
     }
 
     method configObjects(){
-        game.addVisual(texto)
+        game.addVisual(texto)        
         personaje.posicion(nivelActual.posicionInicial())
         game.addVisual(personaje)
     }
@@ -45,7 +46,7 @@ object config{
     }    
 
     method configurarColiciones() {
-		game.onCollideDo(self.nivelActual().casilleroFinal(), {personaje => personaje.llegarALaMeta()})
+		game.onCollideDo(self.nivelActual().casilleroFinal(), {per => per.llegarALaMeta()})
 		game.onCollideDo(personaje, {unObjeto => 
             if (unObjeto.esLetal())
                 personaje.morirse()
@@ -62,15 +63,4 @@ object config{
     method eliminarTablero(){
         game.clear()
     }
-/*
-    method eliminarTablero(){
-        const ancho = (0 .. (game.width()-1))
-        const alto = (0 .. (game.height()-1))
-        ancho.forEach{
-            i => alto.forEach{
-                j => game.getObjectsIn(game.at(i,j)).forEach{unObjeto => game.removeVisual(unObjeto)}
-            }
-        }
-    }
-*/
 }
