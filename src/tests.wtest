@@ -1,11 +1,21 @@
 import soundProducer.*
+import wollok.game.*
+import configuracion.*
 
-describe "Inserte descripción" {
-	method initialize() {
-		soundProducer.provider(soundProviderMock)		
+describe "Inicializacion"{
+	method initialize(){
+		config.configuracionInicial()
 	}
 	
-	test "testX" {
-		assert.that(true)
+	test "Deberia setear correctamente el nombre del juego"{
+		const expectedGameName = "Carpinchos vs nordelta"
+		assert.equals(game.title(),expectedGameName)
+	}
+	
+	test "Deberia setear correctamente el tamaño de la consola"{
+		const expectedHeight = 11
+		const expectedWidth = 18
+		assert.equals(game.height(),expectedHeight)
+		assert.equals(game.width(),expectedWidth)
 	}	
 }
