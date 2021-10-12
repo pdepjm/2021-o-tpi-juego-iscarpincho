@@ -49,7 +49,9 @@ class Enemigo inherits Personaje{
 			
 	override method image(){
 		return "enemigo.png"
-	} 
+	}
+	
+	method direccion() = direccion 
 	
 	method desplazarse(){  
 		if(not self.puedeMoversePara(direccion))

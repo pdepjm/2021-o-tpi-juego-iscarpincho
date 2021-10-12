@@ -1,6 +1,9 @@
 import soundProducer.*
 import wollok.game.*
 import configuracion.*
+import tablero.*
+import personaje.*
+import direcciones.*
 
 describe "Inicializacion"{
 	method initialize(){
@@ -8,18 +11,66 @@ describe "Inicializacion"{
 	}
 	
 	test "Deberia setear correctamente el nombre del juego"{
-		const expectedGameName = "Carpinchos vs nordelta"
-		assert.equals(game.title(),expectedGameName)
+		const gameName = "Carpinchos vs nordelta"
+		assert.equals(game.title(),gameName)
 	}
 	
 	test "Deberia setear correctamente el tamaño de la consola"{
-		const expectedHeight = 11
-		const expectedWidth = 18
-		assert.equals(game.height(),expectedHeight)
-		assert.equals(game.width(),expectedWidth)
+		const height = 11
+		const width = 18
+		assert.equals(game.height(),height)
+		assert.equals(game.width(),width)
 	}
 	
-	test ""{
+	test "Deberia setear correctamente conjunto de paredes"{
+		const primerParedPosicionX = 0
+		const primerParedPosicionY = 0
+		const ultimaParedPosicionX = 17
 		
-	}	
+		assert.equals(config.nivelActual().hayAlgo(new Pared(),game.at(primerParedPosicionX,primerParedPosicionY)),true)
+		assert.equals(config.nivelActual().hayAlgo(new Pared(),game.at(ultimaParedPosicionX,primerParedPosicionY)),true)
+	}
+	
+	test "Deberia setear correctamente casilleros"{
+		
+	}
+	
+	test "Deberia setear correctamente caminos"{
+		
+	}
+	
+	test "Deberia setear correctamente enemigos"{
+		const enemigo = new Enemigo(direccion = derecha, posicion = game.at(6,1))
+		const enemigoEnElJuego = (game.getObjectsIn(game.at(6,1))).last()
+		assert.equals(enemigo.direccion(),enemigoEnElJuego.direccion())
+		assert.that(enemigo.esLetal())
+		assert.that(enemigoEnElJuego.esLetal())
+	}
+	
+	test "Deberia setar correctamente las teclas"{
+		assert.
+	}
+		
+}
+
+/**
+Unit tests personaje
+*/
+describe "Personaje"{
+	
+}
+
+/**
+Unit tests enemigo 
+*/
+describe "Enemigo"{
+	
+}
+
+
+/**
+Integration tests 
+*/
+describe "Juego" {
+	
 }
