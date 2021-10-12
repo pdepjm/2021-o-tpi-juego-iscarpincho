@@ -53,10 +53,9 @@ class Nivel{
 
     method posicionFinal() = casilleroFinal.posicion()
 
-    method hayUnaPared(posicion) = game.getObjectsIn(posicion).any{unObjeto => not unObjeto.puedePisarse()} 
-
-    method hayAlgoLetal(posicion) = game.getObjectsIn(posicion).any{unObjeto => unObjeto.esLetal()}
+    method hayAlgo(algo, posicion) = game.getObjectsIn(posicion).any{unObjeto => algo.esDeLaMismaClase(unObjeto)}
 }
+
 
 
 

@@ -1,6 +1,7 @@
 import wollok.game.*
 import direcciones.*
 import configuracion.*
+import tablero.*
 
 class Personaje{
 	var property posicion = game.at(0,0)
@@ -19,9 +20,9 @@ class Personaje{
 		}
 	}
 	
-	method puedeMoversePara(direccion) = not self.tieneEnfrenteUnaPared(direccion.proximaPosicion(posicion))
-	
-	method tieneEnfrenteUnaPared(coordenadas) = config.nivelActual().hayUnaPared(coordenadas)
+	method puedeMoversePara(direccion) = not self.tieneEnfrenteAlgo(new Pared(), direccion.proximaPosicion(posicion))
+
+	method tieneEnfrenteAlgo(algo, coordenadas) = config.nivelActual().hayAlgo(algo, coordenadas)
 
 	method puedePisarse() = true
 
@@ -58,9 +59,5 @@ class Enemigo inherits Personaje{
 
 	override method esLetal() = true
 	
-	override method puedeMoversePara(sentido) = super(sentido) and not self.tieneEnfrenteAlgoLetal(sentido.proximaPosicion(posicion))
-	
-	method tieneEnfrenteAlgoLetal(coordenadas) = config.nivelActual().hayAlgoLetal(coordenadas)
-
-	
+	override method puedeMoversePara(sentido) = super(sentido) and not self.tieneEnfrenteAlgo(new Agua(), sentido.proximaPosicion(posicion))
 }	
