@@ -4,6 +4,8 @@ import configuracion.*
 import tablero.*
 import personaje.*
 import direcciones.*
+import nivel1.*
+import nivel2.*
 
 describe "Inicializacion"{
 	method initialize(){
@@ -47,24 +49,70 @@ describe "Inicializacion"{
 		assert.that(enemigoEnElJuego.esLetal())
 	}
 	
-	test "Deberia setar correctamente las teclas"{
-		assert.
-	}
-		
+	test "Deberia setear correctamente personaje principal"{
+		const carpincho = new Protagonista(posicion = game.at(1,1))
+		const carpinchoEnElJuego = (game.getObjectsIn(game.at(1,1))).last()
+		assert.equals(carpincho.position(),carpinchoEnElJuego.position())
+		assert.equals(carpincho.esLetal(),carpinchoEnElJuego.esLetal())
+		assert.that(not(carpincho.esLetal()))
+		assert.that(not(carpinchoEnElJuego.esLetal()))
+	}		
 }
 
 /**
 Unit tests personaje
 */
 describe "Personaje"{
+	const personaje = new Personaje()
 	
+	test "Posicion"{
+		assert.equals(personaje.posicion(),game.at(0,0))
+	}
+	
+	test "Imagen"{
+		assert.equals(personaje.image(),"personaje.png")
+	}
+	
+	test "Set Posicion"{
+		const newPosicion = game.at(2,1)
+		personaje.posicion(newPosicion)
+		assert.equals(personaje.posicion(),newPosicion)
+	}
+	
+	test "puedePisarse"{
+		assert.that(personaje.puedePisarse())
+	}
+	
+	test "esLetal"{
+		assert.that(not(personaje.esLetal()))
+	}
 }
+
+/**
+Unit tests protagonista 
+*/
+describe "Protagonista"{
+	const protagonista = new Protagonista()
+}
+
 
 /**
 Unit tests enemigo 
 */
 describe "Enemigo"{
+	const enemigo = new Enemigo()
 	
+	test "Imagen"{
+		assert.equals(enemigo.image(),"enemigo.png")
+	}
+	
+	test "direccion"{
+		assert.equals(enemigo.direccion(),izquierda)
+	}
+	
+	test "esLetal"{
+		assert.that(enemigo.esLetal())
+	}
 }
 
 
