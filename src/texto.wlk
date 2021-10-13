@@ -15,10 +15,6 @@ object texto {
 	
 	method position() = game.at(0, 0)
 	
-	method text() = "¡Carpincho al ataque!"
-	
-	method textColor() = paleta.rojo()
-	
 }
 
 object paleta {

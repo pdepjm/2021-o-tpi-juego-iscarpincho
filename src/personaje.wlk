@@ -44,7 +44,7 @@ class Protagonista inherits Personaje{
 	}
 
 	method morirse(){
-		game.say(self,"ME MORI!! F :(")
+		game.say(self,"ME MORI!!")
 		game.schedule(100, { => posicion = config.nivelActual().posicionInicial()})
 	}
 }

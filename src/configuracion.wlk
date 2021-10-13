@@ -23,7 +23,7 @@ object config{
     }
 
     method setGameTitle(){
-        game.title("Carpinchos vs nordelta")
+        game.title("Carpinchos al ataque!")
     }
 
     method setGameSize(){
@@ -32,8 +32,7 @@ object config{
 	    game.width(18)
     }
 
-    method configObjects(){
-        game.addVisual(texto)        
+    method configObjects(){       
         personaje.posicion(nivelActual.posicionInicial())
         game.addVisual(personaje)
     }
@@ -46,7 +45,7 @@ object config{
     }    
 
     method configurarColiciones() {
-		game.onCollideDo(self.nivelActual().casilleroFinal(), {per => per.llegarALaMeta()})
+		game.onCollideDo(self.nivelActual().casilleroFinal(), {unPersonaje => unPersonaje.llegarALaMeta()})
 		game.onCollideDo(personaje, {unObjeto => 
             if (unObjeto.esLetal())
                 personaje.morirse()

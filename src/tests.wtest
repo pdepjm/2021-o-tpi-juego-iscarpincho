@@ -13,7 +13,7 @@ describe "Inicializacion"{
 	}
 	
 	test "Deberia setear correctamente el nombre del juego"{
-		const gameName = "Carpinchos vs nordelta"
+		const gameName = "Carpinchos al ataque!"
 		assert.equals(game.title(),gameName)
 	}
 	
