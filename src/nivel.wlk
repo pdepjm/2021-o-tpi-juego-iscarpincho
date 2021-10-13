@@ -15,9 +15,6 @@ class Nivel{
         self.generarInicialYFinal()
         self.generarCaminos()
         self.generarEnemigos()
-        enemigos.forEach{ enemigo =>
-            game.onTick(500, "movimientoEnemigo", { => enemigo.desplazarse()})
-        }
     }   
 
     method generarCasilleros(){
@@ -39,7 +36,10 @@ class Nivel{
     }
 
     method generarEnemigos(){
-        enemigos.forEach{enemigo => game.addVisual(enemigo)}
+        enemigos.forEach{enemigo => 
+            game.addVisual(enemigo)
+            game.onTick(500, "movimientoEnemigo", { => enemigo.desplazarse()})
+        }
     }
 
     method casilleroVacio(pos) = game.getObjectsIn(pos).isEmpty()

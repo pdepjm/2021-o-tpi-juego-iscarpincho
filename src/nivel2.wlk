@@ -138,8 +138,8 @@ const nivel2 = new Nivel(
 
     ],
     enemigos = [
-        new Enemigo(direccion = derecha, posicion = game.at(10,6)),
-        new Enemigo(direccion = derecha, posicion = game.at(6,1))
+        new Enemigo(direccionActual = derecha, posicion = game.at(10,6)),
+        new Enemigo(direccionActual = derecha, posicion = game.at(6,1))
     ],
     casilleroInicial = new CasilleroInicial(posicion = game.at(1, 9)),
     casilleroFinal = new CasilleroFinal(posicion = game.at(16,9)),

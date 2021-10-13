@@ -5,20 +5,22 @@ import tablero.*
 
 class Personaje{
 	var property posicion = game.at(0,0)
+	var property direccionActual = derecha
 
-	method image() {
-		return "personaje.png"
-	}
-
-	method position() {
-		return posicion
-	}
+	method position() = posicion
 	
 	method moverPara(direccion) {
 		if (self.puedeMoversePara(direccion) && posicion != config.nivelActual().posicionFinal()){
+			self.cambiarDireccion(direccion)
 			posicion = direccion.proximaPosicion(posicion)
 		}
 	}
+
+	method cambiarDireccion(direccion){
+		direccionActual = direccion
+	}
+
+	method image() = self.nombre() + "_" + direccionActual.nombre() + ".png"
 	
 	method puedeMoversePara(direccion) = not self.tieneEnfrenteAlgo(new Pared(), direccion.proximaPosicion(posicion))
 
@@ -27,10 +29,14 @@ class Personaje{
 	method puedePisarse() = true
 
 	method esLetal() = false
+
+	method nombre() = "personaje"
 	
 }
 
 class Protagonista inherits Personaje{
+
+	override method nombre() = "personaje"
 
 	method llegarALaMeta(){
 		game.say(self,"GANE!!")	
@@ -45,21 +51,15 @@ class Protagonista inherits Personaje{
 
 
 class Enemigo inherits Personaje{
-	var direccion = izquierda
-			
-	override method image(){
-		return "enemigo.png"
-	}
-	
-	method direccion() = direccion 
+	override method nombre() = "enemigo"
 	
 	method desplazarse(){  
-		if(not self.puedeMoversePara(direccion))
-			direccion = direccion.direccionOpuesta()
-		self.moverPara(direccion)
+		if(not self.puedeMoversePara(direccionActual))
+			direccionActual = direccionActual.direccionOpuesta()
+		self.moverPara(direccionActual)
 	}
 
 	override method esLetal() = true
 	
-	override method puedeMoversePara(sentido) = super(sentido) and not self.tieneEnfrenteAlgo(new Agua(), sentido.proximaPosicion(posicion))
+	override method puedeMoversePara(direccion) = super(direccion) and not self.tieneEnfrenteAlgo(new Agua(), direccion.proximaPosicion(posicion))
 }	

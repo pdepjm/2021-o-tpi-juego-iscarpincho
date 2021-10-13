@@ -63,15 +63,4 @@ object config{
     method eliminarTablero(){
         game.clear()
     }
-/*
-    method eliminarTablero(){
-        const ancho = (0 .. (game.width()-1))
-        const alto = (0 .. (game.height()-1))
-        ancho.forEach{
-            i => alto.forEach{
-                j => game.getObjectsIn(game.at(i,j)).forEach{unObjeto => game.removeVisual(unObjeto)}
-            }
-        }
-    }
-*/
 }

@@ -42,9 +42,9 @@ describe "Inicializacion"{
 	}
 	
 	test "Deberia setear correctamente enemigos"{
-		const enemigo = new Enemigo(direccion = derecha, posicion = game.at(6,1))
+		const enemigo = new Enemigo(direccionActual = derecha, posicion = game.at(6,1))
 		const enemigoEnElJuego = (game.getObjectsIn(game.at(6,1))).last()
-		assert.equals(enemigo.direccion(),enemigoEnElJuego.direccion())
+		assert.equals(enemigo.direccionActual(),enemigoEnElJuego.direccionActual())
 		assert.that(enemigo.esLetal())
 		assert.that(enemigoEnElJuego.esLetal())
 	}
@@ -70,7 +70,7 @@ describe "Personaje"{
 	}
 	
 	test "Imagen"{
-		assert.equals(personaje.image(),"personaje.png")
+		assert.equals(personaje.image(),"personaje_derecha.png")
 	}
 	
 	test "Set Posicion"{
@@ -103,11 +103,11 @@ describe "Enemigo"{
 	const enemigo = new Enemigo()
 	
 	test "Imagen"{
-		assert.equals(enemigo.image(),"enemigo.png")
+		assert.equals(enemigo.image(),"enemigo_derecha.png")
 	}
 	
 	test "direccion"{
-		assert.equals(enemigo.direccion(),izquierda)
+		assert.equals(enemigo.direccionActual(),derecha)
 	}
 	
 	test "esLetal"{

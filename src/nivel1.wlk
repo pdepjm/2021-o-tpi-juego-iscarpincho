@@ -112,7 +112,7 @@ const nivel1 = new Nivel(
         new Pared(posicion = game.at(4, 7))
     ],
     enemigos = [
-        new Enemigo(direccion = derecha, posicion = game.at(6,1))
+        new Enemigo(direccionActual = derecha, posicion = game.at(6,1))
     ],
     casilleroInicial = new CasilleroInicial(posicion = game.at(1, 1)),
     casilleroFinal = new CasilleroFinal(posicion = game.at(16,9)),
