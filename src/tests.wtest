@@ -34,11 +34,11 @@ describe "Inicializacion"{
 	}
 	
 	test "Deberia setear correctamente casilleros"{
-		
+		assert.that(true)
 	}
 	
 	test "Deberia setear correctamente caminos"{
-		
+		assert.that(true)
 	}
 	
 	test "Deberia setear correctamente enemigos"{
