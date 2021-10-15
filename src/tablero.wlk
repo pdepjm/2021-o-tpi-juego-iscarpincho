@@ -3,86 +3,71 @@ import wollok.game.*
 class Casillero {
     const property posicion = game.at(0,0)
 
+    method position() = posicion
+
     method render() {
         game.addVisual(self)
     }
 
     //predeterminados para la mayoria:
     method puedePisarse() = true
+
     method esLetal() = false
-    
-    method position() = posicion
+
+    method puedePisarloElEnemigo() = true
 }
 
 class Pared inherits Casillero {
     override method puedePisarse() = false
 
-    method image() {
-        return "./assets/pared.png"
-    }
+    override method puedePisarloElEnemigo() = false
 
-    method esDeLaMismaClase(objeto) = not objeto.puedePisarse()
-
+    method image() = "./assets/pared.png"
+    
 }
 
 class Camino inherits Casillero {
-    method image() {
-        return "./assets/camino.png"
-    }
+    method image() = "./assets/camino.png"
 }
 
 class CasilleroInicial inherits Camino {
-    override method image() {
-        return "./assets/bloqueinicial.png"
-    }
+    override method puedePisarloElEnemigo() = false
+
+    override method image() = "./assets/bloqueinicial.png"
 }
 
 class CasilleroFinal inherits Camino {
-    override method image() {
-        return "./assets/bloquefinal.png"
-    }
+    override method puedePisarloElEnemigo() = false
+
+    override method image() = "./assets/bloquefinal.png"
 }
 
 class Agua inherits Casillero {
     override method esLetal() = true
-    
-    method image() {
-        return "./assets/agua.png"
-    }
 
-    method esDeLaMismaClase(objeto) = objeto.esLetal()
+    override method puedePisarloElEnemigo() = false
+
+    method image() = "./assets/agua.png"
 }
 
 class ConjuntoDeCasilleros{
     const inicio = game.at(0,0)
     const fin = game.at(0,0)
-    const orientacion = "x"
+    const orientacion = orientacionHorizontal
+
+    method crear() 
+
+    method render(){
+        orientacion.rango(inicio, fin).forEach{n => game.addVisualIn(self.crear(), orientacion.coordenada(inicio, n))}
+    }
 }
 
 class ConjuntoDeParedes inherits ConjuntoDeCasilleros{
-    method render(){
-        constructorDeBloques.construir(inicio, fin, orientacion, creadorDePared)
-    }
+	override method crear() = new Pared()
 }
 
 class ConjuntoDeAguas inherits ConjuntoDeCasilleros{
-    method render(){
-        constructorDeBloques.construir(inicio, fin, orientacion, creadorDeAgua)
-    }
-}
-
-object constructorDeBloques{
-    method construir(inicio, fin, orientacion, creador){
-        orientacion.rango(inicio, fin).forEach{n => game.addVisualIn(creador.crear(), orientacion.coordenada(inicio, n))}
-    }
-}
-
-object creadorDePared {
-  method crear() = new Pared()
-}
-
-object creadorDeAgua {
-  method crear() = new Agua()
+	override method crear() = new Agua()
 }
 
 object orientacionVertical{

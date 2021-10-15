@@ -6,22 +6,13 @@ import texto.*
 import direcciones.*
 
 object config{
-    var property nivelActual = nivel1
-    const personaje = new Protagonista(posicion = nivelActual.posicionInicial())
     
     method configuracionInicial(){
         self.setGameTitle()
         self.setGameSize()
-        self.configurarNivelActual()
+        levelManager.configurarNivelActual()
     }
     
-    method configurarNivelActual(){
-        nivelActual.generarNivel()
-        self.configTeclas()
-        self.configObjects()
-        self.configurarColiciones()
-    }
-
     method setGameTitle(){
         game.title("Carpinchos al ataque!")
     }
@@ -32,31 +23,38 @@ object config{
 	    game.width(18)
     }
 
-    method configObjects(){       
-        personaje.posicion(nivelActual.posicionInicial())
-        game.addVisual(personaje)
-    }
-
-    method configTeclas(){
-        keyboard.left().onPressDo({ personaje.moverPara(izquierda) })
-	    keyboard.up().onPressDo({ personaje.moverPara(arriba) })
-	    keyboard.right().onPressDo({ personaje.moverPara(derecha) })
-	    keyboard.down().onPressDo({ personaje.moverPara(abajo) })
+    method configurarTeclas(){
+        keyboard.left().onPressDo{personaje.moverPara(izquierda)}
+	    keyboard.up().onPressDo{personaje.moverPara(arriba)}
+	    keyboard.right().onPressDo{personaje.moverPara(derecha)}
+	    keyboard.down().onPressDo{personaje.moverPara(abajo)}
     }    
 
-    method configurarColiciones() {
-		game.onCollideDo(self.nivelActual().casilleroFinal(), {unPersonaje => unPersonaje.llegarALaMeta()})
+    method configurarColisiones() {
+		game.onCollideDo(levelManager.nivelActual().casilleroFinal(), {unPersonaje => unPersonaje.llegarALaMeta()})
 		game.onCollideDo(personaje, {unObjeto => 
             if (unObjeto.esLetal())
                 personaje.morirse()
         })
-        
 	}
+}
 
+object levelManager{
+    var property nivelActual = nivel1
+
+    method configurarNivelActual(){
+        nivelActual.generarNivel()
+        personaje.generarProtagonista(nivelActual.posicionInicial())
+        nivelActual.generarEnemigos()
+        config.configurarTeclas()
+        config.configurarColisiones()
+    }
+    
     method pasarDeNivel(){
         nivelActual = nivelActual.proximoNivel()
         self.eliminarTablero()
         self.configurarNivelActual()
+        personaje.desbloquear()
     }
 
     method eliminarTablero(){

@@ -10,15 +10,23 @@ class Nivel{
     const property proximoNivel = null
     const enemigos = []
 
+    method posicionInicial() = casilleroInicial.posicion()
+
+    method posicionFinal() = casilleroFinal.posicion()
+    
     method generarNivel() {
         self.generarCasilleros()
         self.generarInicialYFinal()
         self.generarCaminos()
-        self.generarEnemigos()
     }   
 
     method generarCasilleros(){
         casilleros.forEach {casillero => casillero.render()}
+    }
+
+    method generarInicialYFinal(){
+        casilleroInicial.render()
+        casilleroFinal.render()
     }
 
     method generarCaminos(){
@@ -36,24 +44,10 @@ class Nivel{
     }
 
     method generarEnemigos(){
-        enemigos.forEach{enemigo => 
-            game.addVisual(enemigo)
-            game.onTick(500, "movimientoEnemigo", { => enemigo.desplazarse()})
-        }
+        enemigos.forEach{enemigo => enemigo.render()}
     }
 
     method casilleroVacio(pos) = game.getObjectsIn(pos).isEmpty()
-
-    method generarInicialYFinal(){
-        casilleroInicial.render()
-        casilleroFinal.render()
-    }
-
-    method posicionInicial() = casilleroInicial.posicion()
-
-    method posicionFinal() = casilleroFinal.posicion()
-
-    method hayAlgo(algo, posicion) = game.getObjectsIn(posicion).any{unObjeto => algo.esDeLaMismaClase(unObjeto)}
 }
 
 

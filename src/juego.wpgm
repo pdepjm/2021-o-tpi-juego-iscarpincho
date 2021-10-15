@@ -2,8 +2,6 @@ import wollok.game.*
 import configuracion.*
 
 program juego {
-	
 	config.configuracionInicial()
-
 	game.start()
 }
