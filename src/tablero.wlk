@@ -15,6 +15,10 @@ class Casillero {
     method esLetal() = false
 
     method puedePisarloElEnemigo() = true
+
+    method puedeComerse() = false
+
+    method esFullLetal() = false
 }
 
 class Pared inherits Casillero {
@@ -50,6 +54,14 @@ class Agua inherits Casillero {
     method image() = "./assets/agua.png"
 }
 
+class Fuego inherits Casillero {
+    override method esFullLetal() = true
+
+    override method puedePisarloElEnemigo() = false
+    
+    method image() = "./assets/fuego.gif"
+}
+
 class ConjuntoDeCasilleros{
     const inicio = game.at(0,0)
     const fin = game.at(0,0)
@@ -68,6 +80,10 @@ class ConjuntoDeParedes inherits ConjuntoDeCasilleros{
 
 class ConjuntoDeAguas inherits ConjuntoDeCasilleros{
 	override method crear() = new Agua()
+}
+
+class ConjuntoDeFuegos inherits ConjuntoDeCasilleros{
+	override method crear() = new Fuego()
 }
 
 object orientacionVertical{

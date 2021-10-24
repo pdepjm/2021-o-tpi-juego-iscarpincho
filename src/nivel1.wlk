@@ -4,6 +4,7 @@ import nivel.*
 import nivel2.*
 import direcciones.*
 import personaje.*
+import comidas.*
 
 const nivel1 = new Nivel(
     casilleros = [
@@ -113,6 +114,11 @@ const nivel1 = new Nivel(
     ],
     enemigos = [
         new Enemigo(direccionActual = derecha, posicion = game.at(6,1))
+    ],
+    comidas = [
+        new Hamburguesa(posicion = game.at(1,9)),
+        new Helado(posicion = game.at(12,6)),
+        new Manzana(posicion = game.at(13,4))
     ],
     casilleroInicial = new CasilleroInicial(posicion = game.at(1, 1)),
     casilleroFinal = new CasilleroFinal(posicion = game.at(16,9)),

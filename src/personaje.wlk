@@ -17,6 +17,10 @@ class Personaje{
 
 	method esLetal() = false
 	
+	method puedeComerse() = false
+
+	method esFullLetal() = false
+
 	method puedeMoversePara(direccion) 
 
 	method moverPara(direccion) {
@@ -29,37 +33,56 @@ class Personaje{
 	method cambiarDireccion(direccion){
 		direccionActual = direccion
 	}	
+
 }
 
 class Protagonista inherits Personaje{
-	var estaBloqueado = false
+	var estaMuerto = false
+	var property estaBloqueado = false
+	var property vidas = 3
 
 	override method nombre() = "personaje"
 
 	method puedePisarloElEnemigo() = true
+
+	method desbloquear(){
+		estaBloqueado = false
+	}
 
 	method generarProtagonista(unaPosicion){
 		posicion = unaPosicion
 		game.addVisual(self)
 	}
 
-	method desbloquear() {
-		estaBloqueado = false
-	}
-	
 	method llegarALaMeta(){
-		game.say(self,"GANE!!")	
-		game.schedule(1000, { => levelManager.pasarDeNivel()})
 		estaBloqueado = true
+		if (levelManager.esElFinal()){
+			game.say(self,"GANE!!")
+			levelManager.terminarJuego()
+		}
+		else{
+			game.say(self,"PASE DE NIVEL!!")	
+			game.schedule(1000, { => levelManager.pasarDeNivel()})		
+		}
+	}
+
+	method perderUnaVida(){
+		estaBloqueado = true
+		vida.modificar(-1)
+		if(!estaMuerto) {
+			game.say(self,"PERDI UNA VIDA !!")
+			game.schedule(500, { => 
+			posicion = levelManager.nivelActual().posicionInicial()
+			estaBloqueado = false
+			})
+		}
 	}
 
 	method morirse(){
-		game.say(self,"ME MORI!!")
 		estaBloqueado = true
-		game.schedule(500, { => 
-			posicion = levelManager.nivelActual().posicionInicial()
-			estaBloqueado = false
-		})
+		estaMuerto = true
+		game.say(self,"ME QUEDE SIN VIDAS :( !!")
+		levelManager.terminarJuego()
 	}
 
 	method puedeMoversePara(direccion) = self.puedePisarlos(game.getObjectsIn(direccion.proximaPosicion(posicion))) && not estaBloqueado
@@ -90,3 +113,22 @@ class Enemigo inherits Personaje{
 }	
 
 const personaje = new Protagonista(posicion = levelManager.nivelActual().posicionInicial())
+
+object vida{
+	var property cantidad = 3
+
+	method image() = "vida_" + cantidad.toString() + ".png"
+
+	method position() = game.at(15,10)
+
+	method modificar(cuanto){
+		cantidad = 3.min(cantidad + cuanto)
+		if (cantidad == 0){
+			personaje.morirse()
+		}
+	}
+
+	method reiniciarVida(){
+		cantidad = 3
+	}
+}

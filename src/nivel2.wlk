@@ -1,8 +1,10 @@
 import wollok.game.*
 import tablero.*
 import nivel.*
+import nivel3.*
 import direcciones.*
 import personaje.*
+import comidas.*
 
 const nivel2 = new Nivel(
     casilleros = [
@@ -141,7 +143,14 @@ const nivel2 = new Nivel(
         new Enemigo(direccionActual = derecha, posicion = game.at(10,6)),
         new Enemigo(direccionActual = derecha, posicion = game.at(6,1))
     ],
+    comidas = [
+        new Hamburguesa(posicion = game.at(4,3)),
+        new Hamburguesa(posicion = game.at(5,6)),
+        new Manzana(posicion = game.at(9,7)),
+        new Pescado(posicion = game.at(10,6)),
+        new Helado(posicion = game.at(11,6))
+    ],
     casilleroInicial = new CasilleroInicial(posicion = game.at(1, 9)),
     casilleroFinal = new CasilleroFinal(posicion = game.at(16,9)),
-    proximoNivel = nivel2
+    proximoNivel = nivel3
 )

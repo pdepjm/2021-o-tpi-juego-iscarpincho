@@ -9,6 +9,7 @@ class Nivel{
     const property casilleroFinal = null
     const property proximoNivel = null
     const enemigos = []
+    const comidas = []
 
     method posicionInicial() = casilleroInicial.posicion()
 
@@ -47,7 +48,13 @@ class Nivel{
         enemigos.forEach{enemigo => enemigo.render()}
     }
 
+    method generarComida(){
+        comidas.forEach{comida => comida.render()}
+    }
+
     method casilleroVacio(pos) = game.getObjectsIn(pos).isEmpty()
+
+    method cantDeEnemigos() = enemigos.size()
 }
 
 
