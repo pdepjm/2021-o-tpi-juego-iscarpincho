@@ -8,11 +8,20 @@ import direcciones.*
 import comidas.*
 
 object config{
+	
+	method configComun(){
+		self.setGameTitle()
+        self.setGameSize()
+	}
     
     method configuracionInicial(){
-        self.setGameTitle()
-        self.setGameSize()
+        self.configComun()
         levelManager.configurarNivelActual()
+    }
+    
+    method configurarNivel(levelAdmin){
+    	self.configComun()
+    	levelAdmin.configurarNivelActual()
     }
     
     method setGameTitle(){
@@ -48,7 +57,7 @@ object config{
 }
 
 object levelManager{
-    var property nivelActual = nivel3
+    var property nivelActual = nivel1
     const nivelFinal = nivel3
 
     method configurarNivelActual(){

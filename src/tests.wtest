@@ -24,14 +24,14 @@ describe "Inicializacion"{
 		assert.equals(game.width(),width)
 	}
 	
-	test "Deberia setear correctamente conjunto de paredes"{
+	/*test "Deberia setear correctamente conjunto de paredes"{
 		const primerParedPosicionX = 0
 		const primerParedPosicionY = 0
 		const ultimaParedPosicionX = 17
 		
 		assert.equals(config.nivelActual().hayAlgo(new Pared(),game.at(primerParedPosicionX,primerParedPosicionY)),true)
 		assert.equals(config.nivelActual().hayAlgo(new Pared(),game.at(ultimaParedPosicionX,primerParedPosicionY)),true)
-	}
+	}*/
 	
 	test "Deberia setear correctamente casilleros"{
 		assert.that(true)
@@ -113,12 +113,4 @@ describe "Enemigo"{
 	test "esLetal"{
 		assert.that(enemigo.esLetal())
 	}
-}
-
-
-/**
-Integration tests 
-*/
-describe "Juego" {
-	
 }

@@ -1,0 +1,43 @@
+import wollok.game.*
+import configuracion.*
+import tablero.*
+import personaje.*
+import direcciones.*
+import nivel1.*
+import nivel2.*
+
+
+describe "Personaje"{
+	
+	method initialize(){
+		const testLevel = levelManager
+		testLevel.nivelActual(nivel1)
+		config.configurarNivel(testLevel)
+	}
+		
+	test "Personaje deberia poder moverse hacia adelante cuando comienza el juego"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		protagonista.moverPara(arriba)
+		assert.equals(personaje.position(),game.at(1,2))
+	}
+	
+	test "Personaje puede comer una hamburguesa"{
+		const protagonista = new Protagonista()
+		const hamburguesa = new Hamburguesa()	
+	}
+	
+	test "Comer una hamburguesa incrementa vida del personaje"{
+		
+	}
+	
+	test "Pasar por un enemigo decrementa vida del personaje"{
+		
+	}
+	
+}
+
+describe "Enemigo"{
+	
+}
+
