@@ -40,7 +40,6 @@ class Personaje{
 class Protagonista inherits Personaje{
 	var estaMuerto = false
 	var property estaBloqueado = false
-	var property vidas = 3
 
 	override method nombre() = "personaje"
 

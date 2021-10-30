@@ -53,10 +53,7 @@ describe "Inicializacion"{
 	}		
 }
 
-/**
-Unit tests personaje
-*/
-describe "Personaje"{
+describe "Protagonista"{
 	
 	method initialize(){
 		const levelAdmin = levelManager
@@ -70,7 +67,8 @@ describe "Personaje"{
 		protagonista.moverPara(arriba)
 		assert.equals(protagonista.position(),game.at(1,2))
 	}
-	
+/*	
+* CODIGO DE TESTS CUANDO SE TRATO DE PROBAR COLISIONES E INTERACCIONES
 	test "Personaje puede comer una hamburguesa deberia disminuir en uno su barra de vida"{
 		const protagonista = new Protagonista()
 		protagonista.generarProtagonista(game.at(1,1))
@@ -121,28 +119,43 @@ describe "Personaje"{
 		protagonista.moverPara(arriba)
 		assert.equals(vida.cantidad(),3)
 	}
-	
-	test "Personaje deberia perder una vida al caerse al agua"{
-		
+**/
+
+	test "Personaje se muere"{
+		const protagonista = new Protagonista()
+		const isDeadAtFirst = protagonista.estaMuerto()
+		const isBlockedAtFirst = protagonista.estaBloqueado()
+		protagonista.morirse()
+		assert.that(not(isDeadAtFirst))
+		assert.that(not(isBlockedAtFirst))
+		assert.that(protagonista.estaMuerto())
+		assert.that(protagonista.estaBloqueado())
 	}
-	
-	test "Personaje deberia perder una vida al encontrarse con un enemigo"{
-		
-	}
-	
-	test "Personaje que cae al agua con una vida muere"{
-		
-	}
-	
-	test "Personaje llega a la meta"{
-		
-	}
-	
+
 }
 
-/**
-Unit tests enemigo 
-*/
+describe "Vida de Personaje"{
+	var vidaEjemplo
+	method initialize(){
+		vidaEjemplo = vida
+	}
+
+	test "Modificar vida"{
+		const vidasInit = vidaEjemplo.cantidad()
+		vidaEjemplo.modificar(-1)
+		assert.equals(vidasInit,3)
+		assert.equals(vidaEjemplo.cantidad(),2)
+	}
+
+	test "Reiniciar vida"{
+		vidaEjemplo.modificar(-2)
+		const vidasInit = vidaEjemplo.cantidad()
+		vidaEjemplo.reiniciarVida()
+		assert.equals(vidasInit,1)
+		assert.equals(vidaEjemplo.cantidad(),3)
+	}
+}
+
 describe "Enemigo"{
 	const enemigo = new Enemigo()
 	
