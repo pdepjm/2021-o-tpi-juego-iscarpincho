@@ -26,7 +26,8 @@ class Personaje{
 	method moverPara(direccion) {
 		if (self.puedeMoversePara(direccion)){
 			self.cambiarDireccion(direccion)
-			posicion = direccion.proximaPosicion(posicion)
+			self.posicion(direccion.proximaPosicion(posicion))
+			//posicion = direccion.proximaPosicion(posicion)
 		}
 	}
 
@@ -85,7 +86,7 @@ class Protagonista inherits Personaje{
 		levelManager.terminarJuego()
 	}
 
-	method puedeMoversePara(direccion) = self.puedePisarlos(game.getObjectsIn(direccion.proximaPosicion(posicion))) && not estaBloqueado
+	override method puedeMoversePara(direccion) = self.puedePisarlos(game.getObjectsIn(direccion.proximaPosicion(posicion))) && not estaBloqueado
 
 	method puedePisarlos(objetos) = objetos.all{unObjeto => unObjeto.puedePisarse()}
 

@@ -6,6 +6,9 @@ import personaje.*
 import direcciones.*
 import nivel1.*
 import nivel2.*
+import nivel3.*
+import nivel.*
+import comidas.*
 
 describe "Inicializacion"{
 	method initialize(){
@@ -23,15 +26,6 @@ describe "Inicializacion"{
 		assert.equals(game.height(),height)
 		assert.equals(game.width(),width)
 	}
-	
-	/*test "Deberia setear correctamente conjunto de paredes"{
-		const primerParedPosicionX = 0
-		const primerParedPosicionY = 0
-		const ultimaParedPosicionX = 17
-		
-		assert.equals(config.nivelActual().hayAlgo(new Pared(),game.at(primerParedPosicionX,primerParedPosicionY)),true)
-		assert.equals(config.nivelActual().hayAlgo(new Pared(),game.at(ultimaParedPosicionX,primerParedPosicionY)),true)
-	}*/
 	
 	test "Deberia setear correctamente casilleros"{
 		assert.that(true)
@@ -63,38 +57,88 @@ describe "Inicializacion"{
 Unit tests personaje
 */
 describe "Personaje"{
-	const personaje = new Personaje()
 	
-	test "Posicion"{
-		assert.equals(personaje.posicion(),game.at(0,0))
+	method initialize(){
+		const levelAdmin = levelManager
+		levelAdmin.nivelActual(nivel1)
+		config.configurarNivel(levelAdmin)
+	}
+		
+	test "Personaje deberia poder moverse hacia adelante cuando comienza el juego"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		protagonista.moverPara(arriba)
+		assert.equals(protagonista.position(),game.at(1,2))
 	}
 	
-	test "Imagen"{
-		assert.equals(personaje.image(),"personaje_derecha.png")
+	test "Personaje puede comer una hamburguesa deberia disminuir en uno su barra de vida"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		const hamburguesa  = new Hamburguesa(posicion = game.at(1,2))
+		hamburguesa.render()
+		protagonista.moverPara(arriba)
+		assert.equals(vida.cantidad(),2)
 	}
 	
-	test "Set Posicion"{
-		const newPosicion = game.at(2,1)
-		personaje.posicion(newPosicion)
-		assert.equals(personaje.posicion(),newPosicion)
+	
+	//ESTE SERIA DIRECTAMENTE YENDO HASTA DONDE HAY UN HAMBURGUESA EN EL JUEGO.
+	test "Personaje test comer hamburguesa"{
+		personaje.posicion(game.at(1,8))
+		const vidas = vida.cantidad()
+		personaje.moverPara(izquierda)
+		assert.equals(vidas,3)
+		assert.equals(vida.cantidad(),2)
 	}
 	
-	test "puedePisarse"{
-		assert.that(personaje.puedePisarse())
+	test "Personaje puede comer una manzana deberia aumentar su vida en uno"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		vida.cantidad(2)
+		const manzana  = new Manzana(posicion = game.at(1,2))
+		manzana.render()
+		protagonista.moverPara(arriba)
+		assert.equals(vida.cantidad(),3)
 	}
 	
-	test "esLetal"{
-		assert.that(not(personaje.esLetal()))
+	test "Personaje puede comer un helado deberia congelarlo"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		const isBlockedAtFirst = protagonista.estaBloqueado()
+		const helado  = new Helado(posicion = game.at(1,2))
+		helado.render()
+		protagonista.moverPara(arriba)
+		const isBlocked = protagonista.estaBloqueado()
+		assert.that(!(isBlockedAtFirst))
+		assert.that(isBlocked)
 	}
+	
+	test "Persona puede comer pescado deberia recuperar su vida completa"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		const pescado = new Pescado(posicion=game.at(1,2))
+		pescado.render()
+		vida.cantidad(1)
+		protagonista.moverPara(arriba)
+		assert.equals(vida.cantidad(),3)
+	}
+	
+	test "Personaje deberia perder una vida al caerse al agua"{
+		
+	}
+	
+	test "Personaje deberia perder una vida al encontrarse con un enemigo"{
+		
+	}
+	
+	test "Personaje que cae al agua con una vida muere"{
+		
+	}
+	
+	test "Personaje llega a la meta"{
+		
+	}
+	
 }
-
-/**
-Unit tests protagonista 
-*/
-describe "Protagonista"{
-	const protagonista = new Protagonista()
-}
-
 
 /**
 Unit tests enemigo 

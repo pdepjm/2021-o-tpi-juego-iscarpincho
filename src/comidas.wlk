@@ -65,5 +65,4 @@ class Hamburguesa inherits Comida{
     method producirEfecto(){
         vida.modificar(-1)
     }
-
 }
