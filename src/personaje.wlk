@@ -38,7 +38,7 @@ class Personaje{
 }
 
 class Protagonista inherits Personaje{
-	var estaMuerto = false
+	var property estaMuerto = false
 	var property estaBloqueado = false
 
 	override method nombre() = "personaje"

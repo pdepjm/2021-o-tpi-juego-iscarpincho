@@ -55,15 +55,16 @@ describe "Inicializacion"{
 
 describe "Protagonista"{
 	
+	const protagonista = new Protagonista()
+	
 	method initialize(){
+		protagonista.generarProtagonista(game.at(1,1))
 		const levelAdmin = levelManager
 		levelAdmin.nivelActual(nivel1)
 		config.configurarNivel(levelAdmin)
 	}
 		
 	test "Personaje deberia poder moverse hacia adelante cuando comienza el juego"{
-		const protagonista = new Protagonista()
-		protagonista.generarProtagonista(game.at(1,1))
 		protagonista.moverPara(arriba)
 		assert.equals(protagonista.position(),game.at(1,2))
 	}
@@ -122,7 +123,6 @@ describe "Protagonista"{
 **/
 
 	test "Personaje se muere"{
-		const protagonista = new Protagonista()
 		const isDeadAtFirst = protagonista.estaMuerto()
 		const isBlockedAtFirst = protagonista.estaBloqueado()
 		protagonista.morirse()
@@ -170,4 +170,9 @@ describe "Enemigo"{
 	test "esLetal"{
 		assert.that(enemigo.esLetal())
 	}
+}
+
+
+describe "Comidas"{
+	
 }
