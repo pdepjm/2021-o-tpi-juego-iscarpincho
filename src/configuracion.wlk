@@ -43,17 +43,10 @@ object config{
  
     method configurarColisiones() {
 		game.onCollideDo(levelManager.nivelActual().casilleroFinal(), {unPersonaje => unPersonaje.llegarALaMeta()})
-		game.onCollideDo(personaje, {unObjeto => 
-            if (unObjeto.esLetal()) // cuando toca agua o a un enemigo
-                personaje.perderUnaVida()
-            if (unObjeto.puedeComerse()){ // cuando toca comida
-                unObjeto.producirEfecto()
-                game.removeVisual(unObjeto)
-            }
-            if (unObjeto.esFullLetal())
-                personaje.morirse()
-        })
+        game.onCollideDo(personaje, {unObjeto => unObjeto.colisionarConPersonaje()})
 	}
+
+
 }
 
 object levelManager{

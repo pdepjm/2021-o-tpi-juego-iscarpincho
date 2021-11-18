@@ -17,31 +17,30 @@ class Comida{
         game.addVisual(self)
     }
 
-    method puedeComerse() = true
+    method colisionarConPersonaje(){
+        game.removeVisual(self)
+    }
 
     method puedePisarse() = true
 
     method puedePisarloElEnemigo() = true
-
-    method esLetal() = false
-
-    method esFullLetal() = false
-
 }
 
 class Manzana inherits Comida{
     override method nombre() = "manzana"
     
-    method producirEfecto(){
+    override method colisionarConPersonaje(){
         vida.modificar(1)
+        super()
     }
 }
 
 class Pescado inherits Comida{
     override method nombre() = "pescado"
     
-    method producirEfecto(){
+    override method colisionarConPersonaje(){
         vida.modificar(3)
+        super()
     }
     
 }
@@ -49,20 +48,17 @@ class Pescado inherits Comida{
 class Helado inherits Comida{
     override method nombre() = "helado"
     
-    method producirEfecto(){
-        personaje.estaBloqueado(true)
-        game.say(personaje, "ME CONGELE !!")
-        game.schedule(2500, { => 
-            personaje.estaBloqueado(false)
-        })
-    }
-    
+    override method colisionarConPersonaje(){
+        personaje.congelarse()
+        super()
+    }    
 }
 
 class Hamburguesa inherits Comida{
     override method nombre() = "hamburguesa"
     
-    method producirEfecto(){
+    override method colisionarConPersonaje(){
         vida.modificar(-1)
+        super()
     }
 }

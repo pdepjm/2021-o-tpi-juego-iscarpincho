@@ -1,4 +1,5 @@
 import wollok.game.*
+import personaje.*
 
 class Casillero {
     const property posicion = game.at(0,0)
@@ -9,16 +10,13 @@ class Casillero {
         game.addVisual(self)
     }
 
+    method colisionarConPersonaje(){}
+
     //predeterminados para la mayoria:
     method puedePisarse() = true
 
-    method esLetal() = false
-
     method puedePisarloElEnemigo() = true
 
-    method puedeComerse() = false
-
-    method esFullLetal() = false
 }
 
 class Pared inherits Casillero {
@@ -47,7 +45,10 @@ class CasilleroFinal inherits Camino {
 }
 
 class Agua inherits Casillero {
-    override method esLetal() = true
+
+    override method colisionarConPersonaje(){
+        personaje.perderUnaVida()
+    }
 
     override method puedePisarloElEnemigo() = false
 
@@ -55,7 +56,10 @@ class Agua inherits Casillero {
 }
 
 class Fuego inherits Casillero {
-    override method esFullLetal() = true
+
+    override method colisionarConPersonaje(){
+        personaje.morirse()
+    }
 
     override method puedePisarloElEnemigo() = false
     

@@ -6,7 +6,7 @@ import tablero.*
 class Personaje{
 	var property posicion = game.at(0,0)
 	var property direccionActual = derecha
-
+	
 	method position() = posicion
 	
 	method image() = self.nombre() + "_" + direccionActual.nombre() + ".png"
@@ -14,12 +14,6 @@ class Personaje{
 	method nombre()
 	
 	method puedePisarse() = true
-
-	method esLetal() = false
-	
-	method puedeComerse() = false
-
-	method esFullLetal() = false
 
 	method puedeMoversePara(direccion) 
 
@@ -89,12 +83,22 @@ class Protagonista inherits Personaje{
 
 	method puedePisarlos(objetos) = objetos.all{unObjeto => unObjeto.puedePisarse()}
 
+	method congelarse(){
+		estaBloqueado = true
+        game.say(self, "ME CONGELE !!")
+        game.schedule(2500, { => 
+        	estaBloqueado = false
+        })
+	}
+
 }
 
 class Enemigo inherits Personaje{
 	override method nombre() = "enemigo"
-	
-	override method esLetal() = true
+
+	method colisionarConPersonaje(){
+        personaje.perderUnaVida()
+    }
 	
 	method desplazarse(){  
 		if(not self.puedeMoversePara(direccionActual))
