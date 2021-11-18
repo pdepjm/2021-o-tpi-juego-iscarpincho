@@ -12,16 +12,13 @@ import wollok.game.*
 // ¡También se puede combinar con las imágenes!
 
 object texto {
-	
-	method position() = game.at(2, 4)
-	
-	method text() = "¡Pepita!"
-	
-	method textColor() = paleta.verde()
-	
+	method text() = "  V I D A"
+	method textColor() = paleta.blanco()
+	method position() = game.at(14, 10)
 }
 
 object paleta {
+	method blanco() = "FFFFFFFF"
 	method verde() = "00FF00FF"
 	method rojo() = "FF0000FF"
 }

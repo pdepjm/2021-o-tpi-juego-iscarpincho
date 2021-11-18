@@ -1,11 +1,178 @@
 import soundProducer.*
+import wollok.game.*
+import configuracion.*
+import tablero.*
+import personaje.*
+import direcciones.*
+import nivel1.*
+import nivel2.*
+import nivel3.*
+import nivel.*
+import comidas.*
 
-describe "Inserte descripción" {
-	method initialize() {
-		soundProducer.provider(soundProviderMock)		
+describe "Inicializacion"{
+	method initialize(){
+		config.configuracionInicial()
 	}
 	
-	test "testX" {
+	test "Deberia setear correctamente el nombre del juego"{
+		const gameName = "Carpinchos al ataque!"
+		assert.equals(game.title(),gameName)
+	}
+	
+	test "Deberia setear correctamente el tamaño de la consola"{
+		const height = 11
+		const width = 18
+		assert.equals(game.height(),height)
+		assert.equals(game.width(),width)
+	}
+	
+	test "Deberia setear correctamente casilleros"{
 		assert.that(true)
-	}	
+	}
+	
+	test "Deberia setear correctamente caminos"{
+		assert.that(true)
+	}
+	
+	test "Deberia setear correctamente enemigos"{
+		const enemigo = new Enemigo(direccionActual = derecha, posicion = game.at(6,1))
+		const enemigoEnElJuego = (game.getObjectsIn(game.at(6,1))).last()
+		assert.equals(enemigo.direccionActual(),enemigoEnElJuego.direccionActual())
+		assert.that(enemigo.esLetal())
+		assert.that(enemigoEnElJuego.esLetal())
+	}
+	
+	test "Deberia setear correctamente personaje principal"{
+		const carpincho = new Protagonista(posicion = game.at(1,1))
+		const carpinchoEnElJuego = (game.getObjectsIn(game.at(1,1))).last()
+		assert.equals(carpincho.position(),carpinchoEnElJuego.position())
+		assert.equals(carpincho.esLetal(),carpinchoEnElJuego.esLetal())
+		assert.that(not(carpincho.esLetal()))
+		assert.that(not(carpinchoEnElJuego.esLetal()))
+	}		
+}
+
+describe "Protagonista"{
+	
+	const protagonista = new Protagonista()
+	
+	method initialize(){
+		protagonista.generarProtagonista(game.at(1,1))
+		const levelAdmin = levelManager
+		levelAdmin.nivelActual(nivel1)
+		config.configurarNivel(levelAdmin)
+	}
+		
+	test "Personaje deberia poder moverse hacia adelante cuando comienza el juego"{
+		protagonista.moverPara(arriba)
+		assert.equals(protagonista.position(),game.at(1,2))
+	}
+/*	
+* CODIGO DE TESTS CUANDO SE TRATO DE PROBAR COLISIONES E INTERACCIONES
+	test "Personaje puede comer una hamburguesa deberia disminuir en uno su barra de vida"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		const hamburguesa  = new Hamburguesa(posicion = game.at(1,2))
+		hamburguesa.render()
+		protagonista.moverPara(arriba)
+		assert.equals(vida.cantidad(),2)
+	}
+	
+	
+	//ESTE SERIA DIRECTAMENTE YENDO HASTA DONDE HAY UN HAMBURGUESA EN EL JUEGO.
+	test "Personaje test comer hamburguesa"{
+		personaje.posicion(game.at(1,8))
+		const vidas = vida.cantidad()
+		personaje.moverPara(izquierda)
+		assert.equals(vidas,3)
+		assert.equals(vida.cantidad(),2)
+	}
+	
+	test "Personaje puede comer una manzana deberia aumentar su vida en uno"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		vida.cantidad(2)
+		const manzana  = new Manzana(posicion = game.at(1,2))
+		manzana.render()
+		protagonista.moverPara(arriba)
+		assert.equals(vida.cantidad(),3)
+	}
+	
+	test "Personaje puede comer un helado deberia congelarlo"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		const isBlockedAtFirst = protagonista.estaBloqueado()
+		const helado  = new Helado(posicion = game.at(1,2))
+		helado.render()
+		protagonista.moverPara(arriba)
+		const isBlocked = protagonista.estaBloqueado()
+		assert.that(!(isBlockedAtFirst))
+		assert.that(isBlocked)
+	}
+	
+	test "Persona puede comer pescado deberia recuperar su vida completa"{
+		const protagonista = new Protagonista()
+		protagonista.generarProtagonista(game.at(1,1))
+		const pescado = new Pescado(posicion=game.at(1,2))
+		pescado.render()
+		vida.cantidad(1)
+		protagonista.moverPara(arriba)
+		assert.equals(vida.cantidad(),3)
+	}
+**/
+
+	test "Personaje se muere"{
+		const isDeadAtFirst = protagonista.estaMuerto()
+		const isBlockedAtFirst = protagonista.estaBloqueado()
+		protagonista.morirse()
+		assert.that(not(isDeadAtFirst))
+		assert.that(not(isBlockedAtFirst))
+		assert.that(protagonista.estaMuerto())
+		assert.that(protagonista.estaBloqueado())
+	}
+
+}
+
+describe "Vida de Personaje"{
+	var vidaEjemplo
+	method initialize(){
+		vidaEjemplo = vida
+	}
+
+	test "Modificar vida"{
+		const vidasInit = vidaEjemplo.cantidad()
+		vidaEjemplo.modificar(-1)
+		assert.equals(vidasInit,3)
+		assert.equals(vidaEjemplo.cantidad(),2)
+	}
+
+	test "Reiniciar vida"{
+		vidaEjemplo.modificar(-2)
+		const vidasInit = vidaEjemplo.cantidad()
+		vidaEjemplo.reiniciarVida()
+		assert.equals(vidasInit,1)
+		assert.equals(vidaEjemplo.cantidad(),3)
+	}
+}
+
+describe "Enemigo"{
+	const enemigo = new Enemigo()
+	
+	test "Imagen"{
+		assert.equals(enemigo.image(),"enemigo_derecha.png")
+	}
+	
+	test "direccion"{
+		assert.equals(enemigo.direccionActual(),derecha)
+	}
+	
+	test "esLetal"{
+		assert.that(enemigo.esLetal())
+	}
+}
+
+
+describe "Comidas"{
+	
 }
